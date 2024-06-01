@@ -1,0 +1,16 @@
+meta {
+  name: secure basicAuth with cred
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://127.0.0.1:8080/authentication/secure
+  body: none
+  auth: basic
+}
+
+auth:basic {
+  username: marcelo
+  password: marcelo
+}
