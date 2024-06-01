@@ -1,0 +1,16 @@
+meta {
+  name: secures-by-role-admin-and-user
+  type: http
+  seq: 9
+}
+
+get {
+  url: http://127.0.0.1:8080/authentication/secured-by-admin-and-user-roles
+  body: none
+  auth: basic
+}
+
+auth:basic {
+  username: antonio
+  password: 123456
+}

@@ -38,11 +38,14 @@ public class SecurityConfig {
       .sessionManagement(sessionManagementConfigurer ->
         sessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .httpBasic(Customizer.withDefaults())
+      // This was replaced by MethodSecurity
+      /*
       .authorizeHttpRequests(http -> {
-        http.requestMatchers(HttpMethod.GET, "/authentication/insecured").permitAll();
-        http.requestMatchers(HttpMethod.GET, "/authentication/secured").authenticated();
-        http.anyRequest().authenticated(); // The security of endpoints that do not have defined security depends on this.
+      http.requestMatchers(HttpMethod.GET, "/authentication/insecured").permitAll();
+      http.requestMatchers(HttpMethod.GET, "/authentication/secured").authenticated();
+      http.anyRequest().authenticated(); // The security of endpoints that do not have defined security depends on this.
       })
+      */
       .build();
   }
 
@@ -65,14 +68,14 @@ public class SecurityConfig {
 
     usersDetailsList.add(User
       .withUsername("marcelo")
-      .password("marcelo")
+      .password(passwordEncoder().encode("123456"))
       .roles("ADMIN")
       .authorities("READ", "CREATE")
       .build());
 
     usersDetailsList.add(User
       .withUsername("antonio")
-      .password("antonio")
+      .password(passwordEncoder().encode("123456"))
       .roles("USER")
       .authorities("READ")
       .build());
@@ -81,6 +84,7 @@ public class SecurityConfig {
   }
 
   public PasswordEncoder passwordEncoder() {
-    return NoOpPasswordEncoder.getInstance(); //new BCryptPasswordEncoder();
+    // return NoOpPasswordEncoder.getInstance();
+    return new BCryptPasswordEncoder();
   }
 }

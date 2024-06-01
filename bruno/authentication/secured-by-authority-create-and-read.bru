@@ -1,0 +1,16 @@
+meta {
+  name: secured-by-authority-create-and-read
+  type: http
+  seq: 6
+}
+
+get {
+  url: http://127.0.0.1:8080/authentication/secured-by-create-and-read-authority
+  body: none
+  auth: basic
+}
+
+auth:basic {
+  username: marcelo
+  password: 123456
+}

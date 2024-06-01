@@ -1,0 +1,16 @@
+meta {
+  name: secures-by-role-admin FAIL
+  type: http
+  seq: 8
+}
+
+get {
+  url: http://127.0.0.1:8080/authentication/secured-auth-only
+  body: none
+  auth: basic
+}
+
+auth:basic {
+  username: antonio
+  password: 123456
+}
