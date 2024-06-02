@@ -1,5 +1,6 @@
 package cl.marceloaros.learn.springsecurity.configuration;
 
+import cl.marceloaros.learn.springsecurity.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +17,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -53,10 +55,10 @@ public class SecurityConfig {
   }
 
   @Bean
-  public AuthenticationProvider authenticationProvider() {
+  public AuthenticationProvider authenticationProvider(UserDetailsServiceImpl userDetailsServiceImpl) throws Exception {
     DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
     daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-    daoAuthenticationProvider.setUserDetailsService(userDetailsService());
+    daoAuthenticationProvider.setUserDetailsService(userDetailsServiceImpl);
     return daoAuthenticationProvider;
   }
 
@@ -81,6 +83,7 @@ public class SecurityConfig {
     return new InMemoryUserDetailsManager(usersDetailsList);
   }
 
+  @Bean
   public PasswordEncoder passwordEncoder() {
     // return NoOpPasswordEncoder.getInstance();
     return new BCryptPasswordEncoder();
